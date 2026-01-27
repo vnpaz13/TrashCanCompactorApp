@@ -22,7 +22,6 @@ TrashCompactor는 iOS 앱에서 **Bluetooth Low Energy (BLE)** 를 이용해
 - 📡 BLE 명령 전송을 통한 압축 동작 제어
 - ⏱ 압축 동작 중 상태 관리 및 중복 실행 방지
 - 🧪 Test Mode 지원 (BLE 하드웨어 없이 앱 테스트 가능)
-- 📱 UIKit 기반의 단순하고 직관적인 UI
 
 ---
 
