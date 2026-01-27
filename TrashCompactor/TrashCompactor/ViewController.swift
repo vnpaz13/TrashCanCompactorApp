@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SnapKit
 
 class ViewController: UIViewController {
     
@@ -20,89 +21,79 @@ class ViewController: UIViewController {
     
     // 압축 동작 중인지 여부
     private var isCompressing = false
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-    //  Test모드 사용 시 활성화 필요
-    //  bleManager.isTestMode = true
+        // Test모드 사용 시 활성화 필요
+        // bleManager.isTestMode = true
         
         view.backgroundColor = .white
         
-        setupTitleLabel()
-        setupStatusLabel()
-        setupButtons()
+        setupUI()
         setupBLECallbacks()
     }
     
     // MARK: - UI 설정
-    
-    private func setupTitleLabel() {
+    private func setupUI() {
+        // 1) 타이틀 라벨 설정
         titleLabel.text = "쓰레기통 압축기 앱"
         titleLabel.textColor = .black
         titleLabel.textAlignment = .center
         titleLabel.font = .systemFont(ofSize: 35)
-        titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(titleLabel)
         
-        NSLayoutConstraint.activate([
-            titleLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 100),
-            titleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor)
-        ])
-    }
-    
-    private func setupStatusLabel() {
+        // 2) 상태 라벨 설정
         statusLabel.text = "연결 대기중"
         statusLabel.textColor = .black
         statusLabel.textAlignment = .center
-        statusLabel.font = UIFont.boldSystemFont(ofSize: 30)
-        statusLabel.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(statusLabel)
+        statusLabel.font = .boldSystemFont(ofSize: 30)
         
-        NSLayoutConstraint.activate([
-            statusLabel.topAnchor.constraint(equalTo: titleLabel.topAnchor, constant: 120),
-            statusLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor)
-        ])
-    }
-    
-    private func setupButtons() {
-        // BLE 버튼
+        // 3) BLE 버튼 설정
         bleButton.setTitle("블루투스 연결", for: .normal)
         bleButton.setTitleColor(.white, for: .normal)
         bleButton.backgroundColor = .blue
         bleButton.layer.cornerRadius = 12
-        bleButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
-        bleButton.translatesAutoresizingMaskIntoConstraints = false
+        bleButton.titleLabel?.font = .boldSystemFont(ofSize: 20)
         bleButton.addTarget(self, action: #selector(handleBleButton), for: .touchUpInside)
-        view.addSubview(bleButton)
-
-        // 압축 버튼
+        
+        // 4) 압축 버튼 설정
         compactButton.setTitle("압축", for: .normal)
         compactButton.setTitleColor(.white, for: .normal)
         compactButton.backgroundColor = .systemGreen
         compactButton.layer.cornerRadius = 12
-        compactButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
-        compactButton.translatesAutoresizingMaskIntoConstraints = false
+        compactButton.titleLabel?.font = .boldSystemFont(ofSize: 20)
         compactButton.addTarget(self, action: #selector(handleCompactButton), for: .touchUpInside)
+        
+        // 5) addSubview
+        view.addSubview(titleLabel)
+        view.addSubview(statusLabel)
+        view.addSubview(bleButton)
         view.addSubview(compactButton)
-
-        NSLayoutConstraint.activate([
-            // bleButton 위치
-            bleButton.topAnchor.constraint(equalTo: statusLabel.bottomAnchor, constant: 60),
-            bleButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40),
-            
-            // 정사각형 크기
-            bleButton.widthAnchor.constraint(equalToConstant: 150),
-            bleButton.heightAnchor.constraint(equalTo: bleButton.widthAnchor),
-                
-            // compactButton 위치
-            compactButton.centerYAnchor.constraint(equalTo: bleButton.centerYAnchor),
-            compactButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40),
-            
-            // 동일 정사각형
-            compactButton.widthAnchor.constraint(equalTo: bleButton.widthAnchor),
-            compactButton.heightAnchor.constraint(equalTo: bleButton.heightAnchor)
-        ])
+        
+        // 6) SnapKit Constraints
+        titleLabel.snp.makeConstraints { make in
+            make.top.equalToSuperview().offset(100)
+            make.centerX.equalToSuperview()
+        }
+        
+        statusLabel.snp.makeConstraints { make in
+            make.top.equalTo(titleLabel.snp.top).offset(120)
+            make.centerX.equalToSuperview()
+        }
+        
+        bleButton.snp.makeConstraints { make in
+            make.top.equalTo(statusLabel.snp.bottom).offset(60)
+            make.leading.equalToSuperview().offset(40)
+            make.width.equalTo(150)
+            make.height.equalTo(bleButton.snp.width)
+        }
+        
+        compactButton.snp.makeConstraints { make in
+            make.centerY.equalTo(bleButton.snp.centerY)
+            make.trailing.equalToSuperview().inset(40)
+            make.width.equalTo(bleButton.snp.width)
+            make.height.equalTo(bleButton.snp.height)
+        }
     }
     
     // MARK: - BLE 콜백
