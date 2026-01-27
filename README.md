@@ -46,6 +46,7 @@ TrashCompactor는 iOS 앱에서 **Bluetooth Low Energy (BLE)** 를 이용해
 ## ⚙️ 사용 기술
 
 - UIKit
+- SnapKit
 - CoreBluetooth
 - Bluetooth Low Energy (BLE)
 - Arduino (외부 하드웨어 연동)
