@@ -6,70 +6,57 @@ iPhoneアプリから“圧縮開始”コマンドを送信し、Arduino上のB
 
 安全性確保のため、圧縮動作中の重複コマンド防止やステータス表示などの制御機能も実装
 
-🗑️ TrashCompactor iOS App
+# 🗑️ TrashCompactor iOS App
 
-TrashCompactor는
-iOS 앱에서 Bluetooth Low Energy(BLE) 를 통해 Arduino + HM-10 모듈과 통신하여
-쓰레기통 압축기를 원격으로 제어하는 프로젝트입니다.
+TrashCompactor는 iOS 앱에서 **Bluetooth Low Energy (BLE)** 를 이용해  
+**Arduino + HM-10 모듈**과 통신하여 쓰레기통 압축기를 원격으로 제어하는 프로젝트입니다.
 
-사용자는 앱에서 블루투스를 통해 장치에 연결한 뒤,
-버튼 한 번으로 쓰레기 압축 동작을 실행할 수 있습니다.
+사용자는 앱을 통해 블루투스 연결을 수행한 후,  
+버튼 클릭만으로 쓰레기 압축 동작을 실행할 수 있습니다.
 
-🔧 주요 기능
+---
 
-🔵 HM-10 BLE 모듈 자동 스캔 및 연결
+## 🔧 주요 기능
 
-📡 BLE 명령 전송을 통한 압축 시작 제어
+- 🔵 HM-10 BLE 모듈 자동 스캔 및 연결
+- 📡 BLE 명령 전송을 통한 압축 동작 제어
+- ⏱ 압축 동작 중 상태 관리 및 중복 실행 방지
+- 🧪 Test Mode 지원 (BLE 하드웨어 없이 앱 테스트 가능)
+- 📱 UIKit 기반의 단순하고 직관적인 UI
 
-⏱ 압축 동작 중 상태 관리 및 중복 실행 방지
+---
 
-🧪 Test Mode 지원 (BLE 없이 앱 동작 테스트 가능)
+## 🧠 프로젝트 구조
 
-📱 UIKit 기반의 단순하고 직관적인 UI
+### BLEMotorManager
+- CoreBluetooth 기반 BLE 통신 관리자
+- HM-10 디바이스 검색 및 연결 관리
+- 서비스(FFE0) 및 캐릭터리스틱(FFE1) 탐색
+- 압축 시작 명령 `"C"` 전송
+- Test Mode 제공 (실제 BLE 통신 없이 로직 테스트 가능)
 
-🧠 구조 개요
-BLEMotorManager
+### ViewController
+- 사용자 인터페이스(UI) 구성 및 버튼 이벤트 처리
+- BLE 연결 상태 및 압축 진행 상태 표시
+- 압축 동작 중 중복 명령 방지
+- Arduino 동작 시간 기준 타이머를 이용한 압축 완료 처리
 
-CoreBluetooth 기반 BLE 통신 관리자
+---
 
-HM-10 디바이스 스캔 및 연결
+## ⚙️ 사용 기술
 
-특정 Characteristic(FFE1)에 명령("C") 전송
+- Swift
+- UIKit
+- CoreBluetooth
+- Bluetooth Low Energy (BLE)
+- Arduino (외부 하드웨어 연동)
 
-테스트 모드 제공으로 실제 BLE 없이 앱 로직 검증 가능
+---
 
-ViewController
+## 🧪 Test Mode 사용 방법
 
-사용자 인터페이스 및 버튼 이벤트 처리
+BLE 하드웨어가 없는 환경에서도 앱 테스트가 가능하도록  
+Test Mode를 지원합니다.
 
-BLE 연결 상태 및 압축 진행 상태 표시
-
-압축 동작 중 중복 명령 방지
-
-압축 완료 타이머 처리 (Arduino 동작 시간 기준)
-
-⚙️ 사용 기술
-
-Swift
-
-UIKit
-
-CoreBluetooth
-
-BLE (HM-10)
-
-Arduino (외부 하드웨어 연동)
-
-🧪 Test Mode
-
-BLE 하드웨어가 없는 환경에서도 앱 테스트가 가능하도록
-BLEMotorManager에 Test Mode를 제공합니다.
-
+```swift
 bleManager.isTestMode = true
-
-
-Test Mode 활성화 시:
-
-실제 BLE 스캔/연결 없이 즉시 연결 상태로 전환
-
-BLE 명령 전송은 로그 출력으로 대체
