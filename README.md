@@ -9,7 +9,7 @@ iPhoneアプリから“圧縮開始”コマンドを送信し、Arduino上のB
 # 🗑️ TrashCompactor iOS App
 
 TrashCompactor는 iOS 앱에서 **Bluetooth Low Energy (BLE)** 를 이용해  
-**Arduino + HM-10 모듈**과 통신하여 쓰레기통 압축기를 원격으로 제어하는 프로젝트입니다.
+**Arduino + HM-10 모듈**과 통신하여 압축기 구동을 실현하는 프로젝트입니다.
 
 사용자는 앱을 통해 블루투스 연결을 수행한 후,  
 버튼 클릭만으로 쓰레기 압축 동작을 실행할 수 있습니다.
