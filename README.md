@@ -1,20 +1,12 @@
-卒業操作
+# 🗑️ TrashCompactor iOSアプリ
+
+卒業制作
 
 iOSアプリとArduinoをBLE（HM-10）で連携させ、ごみ箱圧縮機のモーターを遠隔操作できるシステム
 
 iPhoneアプリから“圧縮開始”コマンドを送信し、Arduino上のBLDCモーターが約30秒間の圧縮サイクルを実行
 
 安全性確保のため、圧縮動作中の重複コマンド防止やステータス表示などの制御機能も実装
-
-# 🗑️ TrashCompactor iOSアプリ
-
-**TrashCompactor** は、iOSアプリで **Bluetooth Low Energy（BLE）** を利用し、
-
-**Arduino + HM-10 モジュール** と通信して圧縮機を制御するプロジェクトです。
-
-ユーザーはアプリからBluetooth接続を行い、
-
-**ボタンをタップするだけでゴミ圧縮動作を実行**できます。
 
 ---
 
