@@ -45,9 +45,3 @@ iPhoneアプリから“圧縮開始”コマンドを送信し、Arduino上のB
 - Arduino（外部ハードウェア連携）
 
 ---
-
-
-```swift
-bleManager.isTestMode=true
-
-```
